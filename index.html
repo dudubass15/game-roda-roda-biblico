@@ -106,6 +106,32 @@
       </main>
     </div>
 
+    <div id="winner-overlay" class="winner-overlay hidden" aria-live="polite">
+      <div class="winner-card">
+        <div class="winner-badge">🏆</div>
+        <div class="winner-header">Campeão da Partida</div>
+        <div id="winner-name" class="winner-name">Jogador</div>
+        <div id="winner-summary" class="winner-summary">Conquistou a vitória com a melhor pontuação.</div>
+
+        <div class="winner-stats">
+          <div class="winner-stat">
+            <span class="winner-stat-value" id="winner-total">0</span>
+            <span class="winner-stat-label">Pontos</span>
+          </div>
+          <div class="winner-stat success">
+            <span class="winner-stat-value" id="winner-rounds">0</span>
+            <span class="winner-stat-label">Rodadas</span>
+          </div>
+          <div class="winner-stat danger">
+            <span class="winner-stat-value" id="winner-score">0</span>
+            <span class="winner-stat-label">Total</span>
+          </div>
+        </div>
+
+        <button id="winner-close-button" class="winner-button">Nova partida</button>
+      </div>
+    </div>
+
     <script src="game.js"></script>
   </body>
 </html>

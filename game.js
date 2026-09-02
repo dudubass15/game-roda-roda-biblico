@@ -458,6 +458,38 @@ class GameController {
     return this.players.reduce((best, player) => (player.total > best.total ? player : best), this.players[0]);
   }
 
+  showWinnerOverlay(champion) {
+    const overlay = document.getElementById("winner-overlay");
+    const nameEl = document.getElementById("winner-name");
+    const summaryEl = document.getElementById("winner-summary");
+    const totalEl = document.getElementById("winner-total");
+    const roundsEl = document.getElementById("winner-rounds");
+    const scoreEl = document.getElementById("winner-score");
+
+    if (!overlay || !nameEl || !summaryEl || !totalEl || !roundsEl || !scoreEl) {
+      return;
+    }
+
+    nameEl.textContent = champion.nome;
+    summaryEl.textContent = `${champion.nome} venceu a partida com ${champion.total} pontos.`;
+    totalEl.textContent = String(champion.total);
+    roundsEl.textContent = String(this.round);
+    scoreEl.textContent = String(champion.total);
+
+    overlay.classList.remove("hidden");
+    requestAnimationFrame(() => overlay.classList.add("is-visible"));
+  }
+
+  hideWinnerOverlay() {
+    const overlay = document.getElementById("winner-overlay");
+    if (!overlay) {
+      return;
+    }
+
+    overlay.classList.remove("is-visible");
+    setTimeout(() => overlay.classList.add("hidden"), 220);
+  }
+
   finishRound(winnerPlayer) {
     if (this.finished) {
       return;
@@ -473,6 +505,7 @@ class GameController {
       this.finished = true;
       this.setControlsState(false);
       document.getElementById("new-round-button").textContent = "Nova partida";
+      this.showWinnerOverlay(champion);
       audioEngine.playWin();
       this.setStatus(`${champion.nome} venceu a partida com ${champion.total} pontos!`);
       return;
@@ -486,6 +519,7 @@ class GameController {
   }
 
   resetMatch() {
+    this.hideWinnerOverlay();
     this.players.forEach((player) => {
       player.rodada = 0;
       player.total = 0;
@@ -852,6 +886,11 @@ window.addEventListener("load", () => {
   document.getElementById("close-admin-panel").addEventListener("click", closeAnswerManager);
   document.getElementById("save-bank-button").addEventListener("click", saveWordBankFromEditor);
   document.getElementById("restore-bank-button").addEventListener("click", restoreDefaultWordBank);
+  document.getElementById("winner-close-button").addEventListener("click", () => {
+    if (window.game) {
+      window.game.resetMatch();
+    }
+  });
 
   window.addEventListener("resize", () => {
     const wheelCanvas = document.getElementById("wheel-canvas");
