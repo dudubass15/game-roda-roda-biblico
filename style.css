@@ -350,6 +350,10 @@ h1 {
   margin-top: 8px;
 }
 
+.single-button-row {
+  grid-template-columns: 1fr;
+}
+
 button {
   cursor: pointer;
   border: none;

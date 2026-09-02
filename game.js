@@ -377,13 +377,11 @@ class GameController {
   bindEvents() {
     const spinButton = document.getElementById("spin-button");
     const guessLetterButton = document.getElementById("guess-letter-button");
-    const buyVowelButton = document.getElementById("buy-vowel-button");
     const guessAnswerButton = document.getElementById("guess-answer-button");
     const newRoundButton = document.getElementById("new-round-button");
 
     spinButton.addEventListener("click", () => this.spinWheel());
     guessLetterButton.addEventListener("click", () => this.guessLetter());
-    buyVowelButton.addEventListener("click", () => this.buyVowel());
     guessAnswerButton.addEventListener("click", () => this.guessAnswer());
     newRoundButton.addEventListener("click", () => {
       if (this.finished) {
@@ -411,10 +409,10 @@ class GameController {
   setControlsState(enabled) {
     document.getElementById("spin-button").disabled = !enabled;
     document.getElementById("guess-letter-button").disabled = !enabled;
-    document.getElementById("buy-vowel-button").disabled = !enabled;
     document.getElementById("guess-answer-button").disabled = !enabled;
     document.getElementById("letter-input").disabled = !enabled;
     document.getElementById("answer-input").disabled = !enabled;
+    document.getElementById("stop-game-button").disabled = !enabled;
   }
 
   setStatus(message) {
@@ -567,7 +565,7 @@ class GameController {
     this.currentSpinValue = value;
 
     if (typeof value === "number") {
-      this.setStatus(`${this.getCurrentPlayer().nome} tirou ${value} pontos. Digite uma consoante ou compre uma vogal.`);
+      this.setStatus(`${this.getCurrentPlayer().nome} tirou ${value} pontos. Digite qualquer letra e clique em Tentar letra.`);
       return;
     }
 
@@ -618,11 +616,6 @@ class GameController {
       return;
     }
 
-    if ("AEIOU".includes(value)) {
-      this.setStatus("Para vogais, use o botão de comprar vogal.");
-      return;
-    }
-
     if (this.board.isLetterUsed(value)) {
       this.setStatus(`A letra ${value} já foi usada neste tema.`);
       return;
@@ -655,66 +648,6 @@ class GameController {
     this.setStatus(`${player.nome} acertou ${matches} letra(s) e ganhou ${gain} pontos.`);
     input.value = "";
     this.currentSpinValue = null;
-    this.renderPlayers();
-
-    if (this.board.isSolved()) {
-      this.finishRound(player);
-    }
-  }
-
-  buyVowel() {
-    if (this.finished) {
-      return;
-    }
-
-    const input = document.getElementById("letter-input");
-    const value = input.value.trim().toUpperCase();
-    const player = this.getCurrentPlayer();
-
-    if (!value || !/^[A-Z]$/.test(value)) {
-      this.setStatus("Digite uma vogal válida antes de comprar.");
-      return;
-    }
-
-    if (!"AEIOU".includes(value)) {
-      this.setStatus("Esse botão só vale para vogais.");
-      return;
-    }
-
-    if (player.total < 100) {
-      this.setStatus(`${player.nome} não tem pontos suficientes para comprar a vogal.`);
-      return;
-    }
-
-    if (this.board.isLetterUsed(value)) {
-      this.setStatus(`A vogal ${value} já foi usada.`);
-      this.renderPlayers();
-      return;
-    }
-
-    player.total -= 100;
-    player.rodada = Math.max(0, player.rodada - 100);
-
-    const matches = [...this.puzzle.resposta].filter((char) => char === value).length;
-
-    if (matches === 0) {
-      audioEngine.playWrong();
-      this.setStatus(`A vogal ${value} não aparece na palavra. Passa a vez.`);
-      this.nextPlayer();
-      input.value = "";
-      this.renderPlayers();
-      return;
-    }
-
-    for (const char of this.puzzle.resposta) {
-      if (char === value) {
-        this.board.revealLetter(char);
-      }
-    }
-
-    audioEngine.playCorrect();
-    this.setStatus(`${player.nome} revelou a vogal ${value} e manteve o turno.`);
-    input.value = "";
     this.renderPlayers();
 
     if (this.board.isSolved()) {
@@ -873,6 +806,31 @@ function startGame() {
   window.game = new GameController(players);
 }
 
+function stopCurrentGame() {
+  const gameShell = document.getElementById("game-shell");
+  const startScreen = document.getElementById("start-screen");
+  const winnerOverlay = document.getElementById("winner-overlay");
+
+  if (winnerOverlay) {
+    winnerOverlay.classList.add("hidden");
+    winnerOverlay.classList.remove("is-visible");
+  }
+
+  if (window.game && typeof window.game.hideWinnerOverlay === "function") {
+    window.game.hideWinnerOverlay();
+  }
+
+  if (gameShell) {
+    gameShell.classList.add("hidden");
+  }
+
+  if (startScreen) {
+    startScreen.classList.remove("hidden");
+  }
+
+  window.game = null;
+}
+
 window.addEventListener("load", () => {
   renderPlayerFields();
   const adminPanel = document.getElementById("admin-panel");
@@ -882,6 +840,7 @@ window.addEventListener("load", () => {
 
   document.getElementById("player-count").addEventListener("change", renderPlayerFields);
   document.getElementById("start-game-button").addEventListener("click", startGame);
+  document.getElementById("stop-game-button").addEventListener("click", stopCurrentGame);
   document.getElementById("admin-bank-button").addEventListener("click", openAnswerManager);
   document.getElementById("close-admin-panel").addEventListener("click", closeAnswerManager);
   document.getElementById("save-bank-button").addEventListener("click", saveWordBankFromEditor);

@@ -49,7 +49,10 @@
           <p class="eyebrow">Jogo de Palavra</p>
           <h1>Roda a Roda Bíblico</h1>
         </div>
-        <div class="status-pill" id="round-label">Rodada 1</div>
+        <div class="topbar-actions">
+          <div class="status-pill" id="round-label">Rodada 1</div>
+          <button id="stop-game-button" class="stop-button ghost-button">Parar partida</button>
+        </div>
       </header>
 
       <main class="game-layout">
@@ -65,9 +68,8 @@
             <label for="letter-input">Letra</label>
             <input id="letter-input" type="text" maxlength="1" autocomplete="off" aria-label="Digite uma letra" />
 
-            <div class="button-row">
+            <div class="button-row single-button-row">
               <button id="guess-letter-button" class="primary-button">Tentar letra</button>
-              <button id="buy-vowel-button" class="secondary-button">Comprar vogal</button>
             </div>
 
             <label for="answer-input">Resposta</label>

@@ -13,12 +13,12 @@ O jogo simula a dinâmica clássica de adivinhação de painel com letras oculta
 * **Espaçamento:** Mantém espaços vazios entre palavras e deixa pontuações visíveis.
 * **Ação do turno:** Na sua vez, o jogador clica para acionar a roleta virtual.
 * **Sorteio da roleta:** Define um valor numérico de pontos ou penalidades como "Perde a Vez" e "Passa a Vez/Zera".
-* **Chute de consoante:** Se cair em pontuação, o jogador tenta adivinhar uma consoante.
+* **Chute de letra:** Se cair em pontuação, o jogador digita qualquer letra ou vogal no mesmo campo e valida a presença na palavra.
 * **Revelação de acertos:** O Canvas revela todas as posições da letra correta na palavra.
 * **Cálculo de pontos:** O jogador ganha o valor sorteado multiplicado pela quantidade de letras reveladas.
 * **Bônus de acerto:** Acertar a letra mantém o turno com o mesmo jogador.
-* **Erro de letra:** Errar a consoante passa a vez imediatamente para o próximo participante.
-* **Ações alternativas:** O jogador pode arriscar a resposta completa ou comprar uma vogal se tiver pontos suficientes.
+* **Erro de letra:** Errar a letra passa a vez imediatamente para o próximo participante.
+* **Ações alternativas:** O jogador pode arriscar a resposta completa ou encerrar a partida em qualquer momento pelo botão de parada.
 * **Condição de vitória:** Vence a rodada quem acertar a palavra completa e somar mais pontos.
 
 ## Especificações Técnicas
@@ -109,6 +109,12 @@ O agente de IA deve seguir estas diretrizes estritas para construir a aplicaçã
 * **Revelação completa ao acertar:** Quando o jogador resolve a palavra ou completa a resposta correta, o jogo preenche automaticamente todos os quadrinhos e exibe a palavra inteira na tela, reforçando a vitória com feedback visual e sonoro.
 * **Som de vencedor:** O motor de áudio adiciona um padrão musical de vitória ao final de uma rodada ou da partida, criando sensação de recompensa e clímax para os jogadores.
 * **Painel administrativo de respostas:** O usuário responsável pela partida pode abrir um editor de banco de respostas em formato JSON para visualizar, editar e restaurar a lista de temas, respostas e dicas do jogo sem alterar a estrutura principal da aplicação.
+
+### 7. Ajustes finais de experiência e controle de partida
+
+* **Entrada única de letra e vogal:** O jogo foi simplificado para que o usuário digite qualquer letra ou vogal no mesmo campo de entrada e clique em "Tentar letra" para validar a ocorrência no tema atual, removendo a funcionalidade separada de compra de vogal.
+* **Botão de parada da partida:** A interface passou a exibir um botão de "Parar partida" no topo da tela do jogo, permitindo encerrar o jogo em qualquer momento durante a partida sem precisar reiniciar o navegador.
+* **Fluxo de interação mais direto:** A lógica foi ajustada para que o sistema mantenha o mesmo campo para tentativa de letra, reduzindo cliques e deixando a dinâmica mais fluida para uso em TV e apresentação coletiva.
 
 ## Como Executar
 
