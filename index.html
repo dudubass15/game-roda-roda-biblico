@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roda a Roda Bíblico</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="start-screen" class="start-screen">
+      <div class="start-card">
+        <p class="eyebrow">Configuração da Partida</p>
+        <h2>Roda a Roda Bíblico</h2>
+
+        <label for="player-count">Quantidade de jogadores</label>
+        <select id="player-count" aria-label="Quantidade de jogadores">
+          <option value="2">2 jogadores</option>
+          <option value="3">3 jogadores</option>
+          <option value="4">4 jogadores</option>
+          <option value="5">5 jogadores</option>
+          <option value="6">6 jogadores</option>
+        </select>
+
+        <div id="player-name-fields" class="player-name-fields"></div>
+
+        <div class="start-card-actions">
+          <button id="admin-bank-button" class="ghost-button wide-button compact-button">Gerenciar respostas</button>
+          <button id="start-game-button" class="primary-button wide-button">Iniciar partida</button>
+        </div>
+      </div>
+
+      <div id="admin-panel" class="admin-panel hidden">
+        <div class="admin-header">
+          <h3>Banco de respostas bíblicas</h3>
+          <button id="close-admin-panel" class="ghost-button small-button">Fechar</button>
+        </div>
+        <p>Visualize e edite todas as perguntas do jogo em formato JSON.</p>
+        <textarea id="answer-bank-editor" spellcheck="false" aria-label="Banco de respostas"></textarea>
+        <div class="admin-actions">
+          <button id="restore-bank-button" class="secondary-button">Restaurar padrão</button>
+          <button id="save-bank-button" class="primary-button">Salvar banco</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="game-shell" class="app-shell hidden">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Jogo de Palavra</p>
+          <h1>Roda a Roda Bíblico</h1>
+        </div>
+        <div class="status-pill" id="round-label">Rodada 1</div>
+      </header>
+
+      <main class="game-layout">
+        <aside class="sidebar">
+          <section class="panel players-panel">
+            <h2>Jogadores</h2>
+            <div id="players-list" class="players-list"></div>
+          </section>
+
+          <section class="panel controls-panel">
+            <h2>Controle</h2>
+
+            <label for="letter-input">Letra</label>
+            <input id="letter-input" type="text" maxlength="1" autocomplete="off" aria-label="Digite uma letra" />
+
+            <div class="button-row">
+              <button id="guess-letter-button" class="primary-button">Tentar letra</button>
+              <button id="buy-vowel-button" class="secondary-button">Comprar vogal</button>
+            </div>
+
+            <label for="answer-input">Resposta</label>
+            <input id="answer-input" type="text" maxlength="40" autocomplete="off" aria-label="Digite a resposta" />
+
+            <div class="button-row">
+              <button id="guess-answer-button" class="primary-button">Responder</button>
+              <button id="new-round-button" class="ghost-button">Próxima rodada</button>
+            </div>
+          </section>
+        </aside>
+
+        <section class="play-area">
+          <div class="theme-strip">
+            <span class="label">Tema</span>
+            <strong id="theme-name">Carregando tema...</strong>
+          </div>
+
+          <div class="wheel-and-board">
+            <div class="wheel-wrap">
+              <canvas id="wheel-canvas" aria-label="Roleta do jogo"></canvas>
+              <div class="wheel-center">SPIN</div>
+            </div>
+
+            <div class="board-wrap">
+              <canvas id="board-canvas" aria-label="Painel da palavra secreta"></canvas>
+            </div>
+          </div>
+
+          <div class="game-actions">
+            <button id="spin-button" class="spin-button">Girar a roleta</button>
+          </div>
+
+          <div class="status-bar" id="status-message">Aguardando início da rodada.</div>
+        </section>
+      </main>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
