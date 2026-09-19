@@ -1,35 +1,208 @@
 const DEFAULT_WORD_BANK = [
-  { tema: "Personagens do Antigo Testamento", resposta: "MOISES", dica: "O líder que conduziu o povo de Israel." },
-  { tema: "Livros do Novo Testamento", resposta: "APOCALIPSE", dica: "Livro final da Bíblia." },
-  { tema: "Lugares Sagrados", resposta: "JERUSALEM", dica: "Cidade central para a fé judaica e cristã." },
-  { tema: "Profetas", resposta: "DANIEL", dica: "Profeta conhecido pelos sonhos e pela cova dos leões." },
-  { tema: "Pessoas da Bíblia", resposta: "DEBORAH", dica: "Juíza e profetisa do Antigo Testamento." },
-  { tema: "Nomes de Mulheres Bíblicas", resposta: "ESTER", dica: "Rainha que salvou seu povo." },
-  { tema: "Parábolas de Jesus", resposta: "SAMARITANO", dica: "Parábola sobre um homem socorrido por um estranho." },
-  { tema: "Martírios e Fé", resposta: "PAULO", dica: "Apóstolo que escreveu grande parte do Novo Testamento." },
-  { tema: "Nomes dos Discípulos", resposta: "PEDRO", dica: "Apóstolo chamado de 'rocha'." },
-  { tema: "Eventos Bíblicos", resposta: "ARCA", dica: "Objeto sagrado usado no dilúvio e nos relatos de Moisés." },
-  { tema: "Sacrifícios e Adoração", resposta: "TABERNACULO", dica: "Habitação móvel da presença de Deus." },
-  { tema: "Livro de Peregrinação", resposta: "EXODO", dica: "Livro que narra a saída do povo de Israel do Egito." },
-  { tema: "Comando Divino", resposta: "MANDAMENTO", dica: "Lei ou ordem de Deus para a vida das pessoas." },
-  { tema: "Lugares Bíblicos", resposta: "CIDADE", dica: "Local de grande importância em Jerusalém." },
-  { tema: "Frases Bíblicas", resposta: "AMOR", dica: "Virtude central ensinada por Jesus e pelos apóstolos." },
-  { tema: "Personagens do Novo Testamento", resposta: "MARTA", dica: "Irmã de Lázaro e Maria." },
-  { tema: "Histórias de Salvação", resposta: "JORDAO", dica: "Rio do ministério de batismo de João Batista e Jesus." },
-  { tema: "Profetas e Visões", resposta: "JONAS", dica: "Profeta que foi engolido por um grande peixe." }
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "ADAO",
+    dica: "Fui o primeiro homem criado por Deus.",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "MATUSALEM",
+    dica: "Quem foi o homem que viveu mais tempo na Bíblia?",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "NOE",
+    dica: "Construi uma arca por ordem de Deus.",
+  },
+  {
+    tema: "Juízes de Israel",
+    resposta: "EUDE",
+    dica: "Qual juiz de Israel era canhoto?",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "DAVI",
+    dica: "Derrotei Golias.",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "BELSAZAR",
+    dica: "Vi uma escrita misteriosa aparecer na parede durante um banquete.",
+  },
+  {
+    tema: "Profetas",
+    resposta: "DANIEL",
+    dica: "Fui lançado na cova dos leões.",
+  },
+  {
+    tema: "Profetas e Visões",
+    resposta: "JONAS",
+    dica: "Fui engolido por um grande peixe.",
+  },
+  {
+    tema: "Pessoas da Bíblia",
+    resposta: "DEBORA",
+    dica: "Fui juíza e profetisa de Israel.",
+  },
+  {
+    tema: "Nomes dos Discípulos",
+    resposta: "MATIAS",
+    dica: "Quem substituiu Judas entre os apóstolos?",
+  },
+  {
+    tema: "Nomes dos Discípulos",
+    resposta: "PEDRO",
+    dica: "Neguei Jesus três vezes.",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "MEFIBOSETE",
+    dica: "Sou filho de Jônatas, neto do Rei Saul.",
+  },
+  {
+    tema: "Personagens do Novo Testamento",
+    resposta: "JOSE DE ARIMATEIA",
+    dica: "Qual homem pediu a Pilatos o corpo de Jesus?",
+  },
+  {
+    tema: "Nomes de Mulheres Bíblicas",
+    resposta: "EUNICE",
+    dica: "Qual era o nome da mãe de Timóteo?",
+  },
+  {
+    tema: "Lugares Bíblicos",
+    resposta: "BELEM",
+    dica: "Em qual cidade Jesus nasceu?",
+  },
+  {
+    tema: "Personagens do Novo Testamento",
+    resposta: "NICODEMOS",
+    dica: "Ajudei no sepultamento de Jesus com 35L de óleo perfumado.",
+  },
+  {
+    tema: "Nomes de Mulheres Bíblicas",
+    resposta: "ZIPORA",
+    dica: "Fui esposa de Moisés.",
+  },
+  {
+    tema: "Lugares Sagrados",
+    resposta: "SINAI",
+    dica: "Em qual monte Moisés recebeu os Dez Mandamentos?",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "NABUCODONOSOR",
+    dica: "Mandei jogar 3 jovens na fornalha.",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "MISAEL",
+    dica: "Me tornei prisioneiro e me deram o nome de Mesaque.",
+  },
+  {
+    tema: "Livros do Antigo Testamento",
+    resposta: "MALAQUIAS",
+    dica: "Último livro do Antigo Testamento.",
+  },
+  {
+    tema: "Nomes de Mulheres Bíblicas",
+    resposta: "RAABE",
+    dica: "Coloquei um fio de escarlata na janela para proteger minha casa.",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "JOSE",
+    dica: "Quem interpretou os sonhos do faraó no Egito?",
+  },
+  {
+    tema: "Profetas",
+    resposta: "ELIAS",
+    dica: "Fui alimentado por corvos.",
+  },
+  {
+    tema: "Histórias de Salvação",
+    resposta: "LAZARO",
+    dica: "Fui ressuscitado depois de 4 dias.",
+  },
+  {
+    tema: "Lugares Bíblicos",
+    resposta: "CANA",
+    dica: "Em qual cidade Jesus realizou seu primeiro milagre?",
+  },
+  {
+    tema: "Personagens do Novo Testamento",
+    resposta: "JOAO",
+    dica: "Quem batizou Jesus?",
+  },
+  {
+    tema: "Personagens do Novo Testamento",
+    resposta: "PUBLICANO",
+    dica: "Qual era a profissão de Mateus antes de seguir Jesus?",
+  },
+  {
+    tema: "Reis da Bíblia",
+    resposta: "UZIAS",
+    dica: "Qual Rei ficou leproso?",
+  },
+  {
+    tema: "Profetas",
+    resposta: "ELISEU",
+    dica: "Qual profeta multiplicou o azeite de uma viúva?",
+  },
+  {
+    tema: "Personagens do Novo Testamento",
+    resposta: "ZAQUEU",
+    dica: "Quem subiu em uma árvore para ver Jesus passar?",
+  },
+  {
+    tema: "Livros do Novo Testamento",
+    resposta: "MARCOS",
+    dica: "Qual evangelho é conhecido por ser o mais curto?",
+  },
+  {
+    tema: "Personagens do Antigo Testamento",
+    resposta: "ENOQUE",
+    dica: "Fui pai de Matusalém.",
+  },
+  {
+    tema: "Lugares Bíblicos",
+    resposta: "MALTA",
+    dica: "Para qual ilha Paulo foi levado após um naufrágio?",
+  },
+  {
+    tema: "Nomes dos Discípulos",
+    resposta: "ANDRE",
+    dica: "Qual apóstolo era irmão de Pedro?",
+  },
+  {
+    tema: "Natureza e Objetos Bíblicos",
+    resposta: "SICOMORO",
+    dica: "Que tipo de árvore Zaqueu subiu?",
+  },
 ];
 
 let WORD_BANK = DEFAULT_WORD_BANK.map((item) => ({
   ...item,
   resposta: String(item.resposta || "").toUpperCase(),
   tema: String(item.tema || "").trim(),
-  dica: String(item.dica || "").trim()
+  dica: String(item.dica || "").trim(),
 }));
 
 const WHEEL_SEGMENTS = [
-  100, 150, 200, 250, 300, 500,
-  50, 100, 200, 300, 150,
-  "PASSA", "PERDE", "ZERA"
+  100,
+  150,
+  200,
+  250,
+  300,
+  500,
+  50,
+  100,
+  200,
+  300,
+  150,
+  "PASSA",
+  "PERDE",
+  "ZERA",
 ];
 
 const MAX_ROUNDS = 4;
@@ -51,7 +224,13 @@ class AudioEngine {
     }
   }
 
-  tone({ frequency = 440, type = "sine", duration = 0.18, gain = 0.04, delay = 0 }) {
+  tone({
+    frequency = 440,
+    type = "sine",
+    duration = 0.18,
+    gain = 0.04,
+    delay = 0,
+  }) {
     this.ensure();
     if (!this.context) {
       return;
@@ -75,12 +254,24 @@ class AudioEngine {
 
   playSpin() {
     this.tone({ frequency: 170, type: "triangle", duration: 0.14, gain: 0.03 });
-    this.tone({ frequency: 260, type: "sawtooth", duration: 0.16, gain: 0.022, delay: 0.08 });
+    this.tone({
+      frequency: 260,
+      type: "sawtooth",
+      duration: 0.16,
+      gain: 0.022,
+      delay: 0.08,
+    });
   }
 
   playCorrect() {
     this.tone({ frequency: 440, type: "square", duration: 0.12, gain: 0.04 });
-    this.tone({ frequency: 660, type: "triangle", duration: 0.14, gain: 0.03, delay: 0.08 });
+    this.tone({
+      frequency: 660,
+      type: "triangle",
+      duration: 0.14,
+      gain: 0.03,
+      delay: 0.08,
+    });
   }
 
   playWrong() {
@@ -89,8 +280,20 @@ class AudioEngine {
 
   playWin() {
     this.tone({ frequency: 520, type: "triangle", duration: 0.12, gain: 0.05 });
-    this.tone({ frequency: 720, type: "triangle", duration: 0.18, gain: 0.05, delay: 0.08 });
-    this.tone({ frequency: 900, type: "triangle", duration: 0.2, gain: 0.04, delay: 0.18 });
+    this.tone({
+      frequency: 720,
+      type: "triangle",
+      duration: 0.18,
+      gain: 0.05,
+      delay: 0.08,
+    });
+    this.tone({
+      frequency: 900,
+      type: "triangle",
+      duration: 0.2,
+      gain: 0.04,
+      delay: 0.18,
+    });
   }
 }
 
@@ -155,7 +358,11 @@ class Wheel {
       const segmentAngle = 360 / segmentCount;
       const chosenIndex = Math.floor(Math.random() * segmentCount);
       const currentNormalized = ((this.rotation % 360) + 360) % 360;
-      const destinationAngle = (360 - ((chosenIndex * segmentAngle + segmentAngle / 2 + currentNormalized) % 360)) + 360 * 5;
+      const destinationAngle =
+        360 -
+        ((chosenIndex * segmentAngle + segmentAngle / 2 + currentNormalized) %
+          360) +
+        360 * 5;
 
       this.targetRotation = this.rotation + destinationAngle;
       this.currentValue = this.segments[chosenIndex];
@@ -256,7 +463,9 @@ class GameBoard {
   }
 
   isSolved() {
-    return this.answer.split("").every((char) => char === " " || this.revealedLetters.has(char));
+    return this.answer
+      .split("")
+      .every((char) => char === " " || this.revealedLetters.has(char));
   }
 
   isLetterUsed(letter) {
@@ -282,12 +491,18 @@ class GameBoard {
     // e só então distribui as letras igualmente entre essas linhas. Isso evita que
     // uma resposta longa gere células minúsculas quando ela poderia quebrar em
     // mais de uma linha usando um tamanho de célula maior.
-    const lettersPerRowAtMax = Math.max(1, Math.floor((availableWidth + cellGap) / (maxCellWidth + cellGap)));
+    const lettersPerRowAtMax = Math.max(
+      1,
+      Math.floor((availableWidth + cellGap) / (maxCellWidth + cellGap)),
+    );
     const rowsNeeded = Math.max(1, Math.ceil(letterCount / lettersPerRowAtMax));
     const maxLettersPerRow = Math.max(1, Math.ceil(letterCount / rowsNeeded));
     const cellWidth = Math.min(
       maxCellWidth,
-      Math.max(minCellWidth, (availableWidth - (maxLettersPerRow - 1) * cellGap) / maxLettersPerRow)
+      Math.max(
+        minCellWidth,
+        (availableWidth - (maxLettersPerRow - 1) * cellGap) / maxLettersPerRow,
+      ),
     );
     const cellHeight = Math.min(72, Math.max(46, cellWidth + 18));
     const dynamicHeight = Math.max(260, 110 + rowsNeeded * (cellHeight + 18));
@@ -355,14 +570,14 @@ class GameController {
     this.players = playerNames.map((name, index) => ({
       nome: name.trim() || `Jogador ${index + 1}`,
       rodada: 0,
-      total: 0
+      total: 0,
     }));
 
     if (this.players.length === 0) {
       this.players = [
         { nome: "Jogador 1", rodada: 0, total: 0 },
         { nome: "Jogador 2", rodada: 0, total: 0 },
-        { nome: "Jogador 3", rodada: 0, total: 0 }
+        { nome: "Jogador 3", rodada: 0, total: 0 },
       ];
     }
 
@@ -461,7 +676,8 @@ class GameController {
   }
 
   nextPlayer() {
-    this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+    this.currentPlayerIndex =
+      (this.currentPlayerIndex + 1) % this.players.length;
     this.renderPlayers();
   }
 
@@ -471,7 +687,10 @@ class GameController {
   }
 
   getWinningPlayer() {
-    return this.players.reduce((best, player) => (player.total > best.total ? player : best), this.players[0]);
+    return this.players.reduce(
+      (best, player) => (player.total > best.total ? player : best),
+      this.players[0],
+    );
   }
 
   showWinnerOverlay(champion) {
@@ -482,7 +701,14 @@ class GameController {
     const roundsEl = document.getElementById("winner-rounds");
     const scoreEl = document.getElementById("winner-score");
 
-    if (!overlay || !nameEl || !summaryEl || !totalEl || !roundsEl || !scoreEl) {
+    if (
+      !overlay ||
+      !nameEl ||
+      !summaryEl ||
+      !totalEl ||
+      !roundsEl ||
+      !scoreEl
+    ) {
       return;
     }
 
@@ -523,12 +749,16 @@ class GameController {
       document.getElementById("new-round-button").textContent = "Nova partida";
       this.showWinnerOverlay(champion);
       audioEngine.playWin();
-      this.setStatus(`${champion.nome} venceu a partida com ${champion.total} pontos!`);
+      this.setStatus(
+        `${champion.nome} venceu a partida com ${champion.total} pontos!`,
+      );
       return;
     }
 
     this.round += 1;
-    this.setStatus(`${winnerPlayer.nome} venceu a rodada! A resposta era ${this.puzzle.resposta}. Próxima rodada será ${this.round}.`);
+    this.setStatus(
+      `${winnerPlayer.nome} venceu a rodada! A resposta era ${this.puzzle.resposta}. Próxima rodada será ${this.round}.`,
+    );
     document.getElementById("round-label").textContent = `Rodada ${this.round}`;
     this.renderPlayers();
     audioEngine.playWin();
@@ -562,11 +792,14 @@ class GameController {
       player.rodada = 0;
     });
 
-    document.getElementById("theme-name").textContent = `${puzzle.tema} — ${puzzle.dica}`;
+    document.getElementById("theme-name").textContent =
+      `${puzzle.tema} — ${puzzle.dica}`;
     document.getElementById("round-label").textContent = `Rodada ${this.round}`;
     this.board.setAnswer(puzzle.resposta);
     this.setControlsState(true);
-    this.setStatus(`${this.getCurrentPlayer().nome} começa a rodada. Gire a roleta.`);
+    this.setStatus(
+      `${this.getCurrentPlayer().nome} começa a rodada. Gire a roleta.`,
+    );
     document.getElementById("answer-input").value = "";
     document.getElementById("letter-input").value = "";
     this.renderPlayers();
@@ -594,13 +827,17 @@ class GameController {
     this.currentSpinValue = value;
 
     if (typeof value === "number") {
-      this.setStatus(`${this.getCurrentPlayer().nome} tirou ${value} pontos. Digite qualquer letra e clique em Tentar letra.`);
+      this.setStatus(
+        `${this.getCurrentPlayer().nome} tirou ${value} pontos. Digite qualquer letra e clique em Tentar letra.`,
+      );
       return;
     }
 
     if (value === "PERDE") {
       audioEngine.playWrong();
-      this.setStatus(`${this.getCurrentPlayer().nome} caiu em PERDE A VEZ. Vez passada.`);
+      this.setStatus(
+        `${this.getCurrentPlayer().nome} caiu em PERDE A VEZ. Vez passada.`,
+      );
       this.nextPlayer();
       this.currentSpinValue = null;
       return;
@@ -612,7 +849,9 @@ class GameController {
       player.total = 0;
       audioEngine.playWrong();
       this.renderPlayers();
-      this.setStatus(`${player.nome} caiu em ZERA. Sua pontuação total foi zerada.`);
+      this.setStatus(
+        `${player.nome} caiu em ZERA. Sua pontuação total foi zerada.`,
+      );
       this.nextPlayer();
       this.currentSpinValue = null;
       return;
@@ -649,11 +888,15 @@ class GameController {
       return;
     }
 
-    const matches = [...this.puzzle.resposta].filter((char) => char === value).length;
+    const matches = [...this.puzzle.resposta].filter(
+      (char) => char === value,
+    ).length;
 
     if (matches === 0) {
       audioEngine.playWrong();
-      this.setStatus(`A letra ${value} não aparece na palavra. Vez do próximo jogador.`);
+      this.setStatus(
+        `A letra ${value} não aparece na palavra. Vez do próximo jogador.`,
+      );
       this.nextPlayer();
       this.currentSpinValue = null;
       input.value = "";
@@ -674,7 +917,9 @@ class GameController {
     }
 
     audioEngine.playCorrect();
-    this.setStatus(`${player.nome} acertou ${matches} letra(s) e ganhou ${gain} pontos.`);
+    this.setStatus(
+      `${player.nome} acertou ${matches} letra(s) e ganhou ${gain} pontos.`,
+    );
     input.value = "";
     this.currentSpinValue = null;
     this.renderPlayers();
@@ -707,7 +952,9 @@ class GameController {
     }
 
     audioEngine.playWrong();
-    this.setStatus(`Resposta errada. ${this.getCurrentPlayer().nome} perdeu a vez.`);
+    this.setStatus(
+      `Resposta errada. ${this.getCurrentPlayer().nome} perdeu a vez.`,
+    );
     this.nextPlayer();
     this.currentSpinValue = null;
     input.value = "";
@@ -752,8 +999,10 @@ function saveWordBankFromEditor() {
     const sanitized = parsed
       .map((item) => ({
         tema: String(item.tema || "").trim(),
-        resposta: String(item.resposta || "").trim().toUpperCase(),
-        dica: String(item.dica || "").trim()
+        resposta: String(item.resposta || "")
+          .trim()
+          .toUpperCase(),
+        dica: String(item.dica || "").trim(),
       }))
       .filter((item) => item.tema && item.resposta && item.dica);
 
@@ -768,7 +1017,8 @@ function saveWordBankFromEditor() {
       window.game.setStatus("Banco de respostas atualizado com sucesso.");
     }
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Formato inválido.";
+    const message =
+      error instanceof Error ? error.message : "Formato inválido.";
     if (window.game && typeof window.game.setStatus === "function") {
       window.game.setStatus(`Erro ao salvar banco: ${message}`);
     } else {
@@ -782,7 +1032,7 @@ function restoreDefaultWordBank() {
     ...item,
     resposta: String(item.resposta || "").toUpperCase(),
     tema: String(item.tema || "").trim(),
-    dica: String(item.dica || "").trim()
+    dica: String(item.dica || "").trim(),
   }));
 
   const editor = document.getElementById("answer-bank-editor");
@@ -868,18 +1118,34 @@ window.addEventListener("load", () => {
     adminPanel.classList.add("hidden");
   }
 
-  document.getElementById("player-count").addEventListener("change", renderPlayerFields);
-  document.getElementById("start-game-button").addEventListener("click", startGame);
-  document.getElementById("stop-game-button").addEventListener("click", stopCurrentGame);
-  document.getElementById("admin-bank-button").addEventListener("click", openAnswerManager);
-  document.getElementById("close-admin-panel").addEventListener("click", closeAnswerManager);
-  document.getElementById("save-bank-button").addEventListener("click", saveWordBankFromEditor);
-  document.getElementById("restore-bank-button").addEventListener("click", restoreDefaultWordBank);
-  document.getElementById("winner-close-button").addEventListener("click", () => {
-    if (window.game) {
-      window.game.resetMatch();
-    }
-  });
+  document
+    .getElementById("player-count")
+    .addEventListener("change", renderPlayerFields);
+  document
+    .getElementById("start-game-button")
+    .addEventListener("click", startGame);
+  document
+    .getElementById("stop-game-button")
+    .addEventListener("click", stopCurrentGame);
+  document
+    .getElementById("admin-bank-button")
+    .addEventListener("click", openAnswerManager);
+  document
+    .getElementById("close-admin-panel")
+    .addEventListener("click", closeAnswerManager);
+  document
+    .getElementById("save-bank-button")
+    .addEventListener("click", saveWordBankFromEditor);
+  document
+    .getElementById("restore-bank-button")
+    .addEventListener("click", restoreDefaultWordBank);
+  document
+    .getElementById("winner-close-button")
+    .addEventListener("click", () => {
+      if (window.game) {
+        window.game.resetMatch();
+      }
+    });
 
   window.addEventListener("resize", () => {
     const wheelCanvas = document.getElementById("wheel-canvas");
