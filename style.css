@@ -265,6 +265,14 @@ h1 {
   padding: 24px;
   background: rgba(15, 25, 41, 0.9);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
+  /* O sidebar estica para acompanhar a altura da coluna de jogo (grid stretch
+     por padrão). display:flex + min-height:0 permite que o painel de
+     jogadores (abaixo) ocupe só o espaço realmente sobrando e role
+     internamente, em vez de forçar essa altura a crescer além do canvas. */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .panel {
@@ -277,17 +285,53 @@ h1 {
 
 .players-panel {
   margin-bottom: 22px;
+  /* Cresce para preencher o espaço vertical que sobra no sidebar (a altura
+     do sidebar é definida pelo grid, que por sua vez segue a altura natural
+     da área de jogo). min-height:0 é o que permite ao filho .players-list
+     encolher e rolar em vez de estourar o painel. */
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 300px;
 }
 
 .panel h2 {
   margin: 0 0 18px;
   font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 .players-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  /* Sem altura fixa/vh "no chute": ocupa exatamente o espaço restante dentro
+     de .players-panel (flex:1 1 auto + min-height:0) e só rola internamente
+     se a lista não couber. Funciona igual em qualquer resolução e para
+     qualquer quantidade de jogadores, sem depender de valores mágicos. */
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  margin-right: -6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 180, 255, 0.45) rgba(255, 255, 255, 0.05);
+}
+
+.players-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.players-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.players-list::-webkit-scrollbar-thumb {
+  background: rgba(148, 180, 255, 0.45);
+  border-radius: 999px;
 }
 
 .player-item {
@@ -298,7 +342,8 @@ h1 {
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, padding 0.2s ease;
+  flex-shrink: 0;
 }
 
 .player-item.active {
@@ -326,10 +371,36 @@ h1 {
   font-size: 0.82rem;
 }
 
+/* Modo compacto: aplicado via JS quando há muitos jogadores (5+), reduzindo
+   a altura de cada card para minimizar a necessidade de rolagem. */
+.players-list.compact {
+  gap: 8px;
+}
+
+.players-list.compact .player-item {
+  padding: 9px 14px;
+  border-radius: 12px;
+}
+
+.players-list.compact .player-item .name {
+  font-size: 0.92rem;
+}
+
+.players-list.compact .player-item .score {
+  font-size: 1.02rem;
+}
+
+.players-list.compact .player-meta {
+  font-size: 0.72rem;
+}
+
 .controls-panel {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* Nunca deve ser espremido pelo flex do .sidebar: sempre mantém sua altura
+     natural, sobrando espaço para .players-panel/.players-list. */
+  flex-shrink: 0;
 }
 
 .controls-panel label {
