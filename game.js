@@ -1,7 +1,7 @@
 const DEFAULT_WORD_BANK = [
   { tema: "Personagens do Antigo Testamento", resposta: "MOISES", dica: "O líder que conduziu o povo de Israel." },
   { tema: "Livros do Novo Testamento", resposta: "APOCALIPSE", dica: "Livro final da Bíblia." },
-  { tema: "Lugares Sagrados", resposta: "JERUSALEN", dica: "Cidade central para a fé judaica e cristã." },
+  { tema: "Lugares Sagrados", resposta: "JERUSALEM", dica: "Cidade central para a fé judaica e cristã." },
   { tema: "Profetas", resposta: "DANIEL", dica: "Profeta conhecido pelos sonhos e pela cova dos leões." },
   { tema: "Pessoas da Bíblia", resposta: "DEBORAH", dica: "Juíza e profetisa do Antigo Testamento." },
   { tema: "Nomes de Mulheres Bíblicas", resposta: "ESTER", dica: "Rainha que salvou seu povo." },
@@ -15,7 +15,7 @@ const DEFAULT_WORD_BANK = [
   { tema: "Lugares Bíblicos", resposta: "CIDADE", dica: "Local de grande importância em Jerusalém." },
   { tema: "Frases Bíblicas", resposta: "AMOR", dica: "Virtude central ensinada por Jesus e pelos apóstolos." },
   { tema: "Personagens do Novo Testamento", resposta: "MARTA", dica: "Irmã de Lázaro e Maria." },
-  { tema: "Histórias de Salvação", resposta: "NARIZ", dica: "Local do ministério de João Batista e Jesus." },
+  { tema: "Histórias de Salvação", resposta: "JORDAO", dica: "Rio do ministério de batismo de João Batista e Jesus." },
   { tema: "Profetas e Visões", resposta: "JONAS", dica: "Profeta que foi engolido por um grande peixe." }
 ];
 
@@ -32,8 +32,8 @@ const WHEEL_SEGMENTS = [
   "PASSA", "PERDE", "ZERA"
 ];
 
-const MAX_ROUNDS = 3;
-const MAX_SCORE = 3000;
+const MAX_ROUNDS = 4;
+const MAX_SCORE = 4000;
 
 class AudioEngine {
   constructor() {
@@ -267,14 +267,7 @@ class GameBoard {
   render() {
     const ctx = this.ctx;
     const width = this.canvas.clientWidth || 700;
-    const height = this.canvas.clientHeight || 250;
     const dpr = window.devicePixelRatio || 1;
-
-    this.canvas.width = Math.max(1, Math.round(width * dpr));
-    this.canvas.height = Math.max(1, Math.round(height * dpr));
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
-    ctx.clearRect(0, 0, width, height);
 
     const chars = this.answer.split("");
     const visibleLetters = chars.filter((char) => char !== " ");
@@ -284,26 +277,37 @@ class GameBoard {
     const maxCellWidth = 52;
     const letterCount = Math.max(visibleLetters.length, 1);
     const availableWidth = width - leftPadding * 2;
-    let cellWidth = Math.min(maxCellWidth, Math.max(minCellWidth, availableWidth / letterCount - cellGap));
 
-    if (letterCount > 1) {
-      const fullWidth = letterCount * cellWidth + (letterCount - 1) * cellGap;
-      if (fullWidth > availableWidth) {
-        cellWidth = Math.max(minCellWidth, (availableWidth - (letterCount - 1) * cellGap) / letterCount);
-      }
-    }
-
+    // Descobre quantas linhas são necessárias assumindo o tamanho máximo de célula,
+    // e só então distribui as letras igualmente entre essas linhas. Isso evita que
+    // uma resposta longa gere células minúsculas quando ela poderia quebrar em
+    // mais de uma linha usando um tamanho de célula maior.
+    const lettersPerRowAtMax = Math.max(1, Math.floor((availableWidth + cellGap) / (maxCellWidth + cellGap)));
+    const rowsNeeded = Math.max(1, Math.ceil(letterCount / lettersPerRowAtMax));
+    const maxLettersPerRow = Math.max(1, Math.ceil(letterCount / rowsNeeded));
+    const cellWidth = Math.min(
+      maxCellWidth,
+      Math.max(minCellWidth, (availableWidth - (maxLettersPerRow - 1) * cellGap) / maxLettersPerRow)
+    );
     const cellHeight = Math.min(72, Math.max(46, cellWidth + 18));
-    const maxLettersPerRow = Math.max(1, Math.min(visibleLetters.length || 1, Math.floor((width - leftPadding * 2 + cellGap) / (cellWidth + cellGap))));
-    const rowsNeeded = Math.max(1, Math.ceil(visibleLetters.length / maxLettersPerRow));
     const dynamicHeight = Math.max(260, 110 + rowsNeeded * (cellHeight + 18));
 
-    if (this.canvas.clientHeight !== dynamicHeight) {
+    // O buffer do canvas precisa ser dimensionado com a altura já calculada ANTES
+    // de desenhar. Se o buffer ficasse com a altura antiga (de um frame anterior),
+    // as fileiras de cima de uma resposta longa eram desenhadas fora da área
+    // visível do canvas e ficavam cortadas na tela.
+    if (Math.round(this.canvas.clientHeight) !== dynamicHeight) {
       this.canvas.style.height = `${dynamicHeight}px`;
     }
 
-    const drawHeight = Math.max(dynamicHeight, height);
-    const startY = drawHeight - 40;
+    const height = dynamicHeight;
+    this.canvas.width = Math.max(1, Math.round(width * dpr));
+    this.canvas.height = Math.max(1, Math.round(height * dpr));
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, width, height);
+
+    const startY = height - 40;
     let x = leftPadding;
     let rowY = startY;
     let currentRowIndex = 0;
@@ -319,7 +323,7 @@ class GameBoard {
         return;
       }
 
-      if (currentRowIndex >= maxLettersPerRow && char !== " ") {
+      if (currentRowIndex >= maxLettersPerRow) {
         currentRowIndex = 0;
         rowY -= cellHeight + 18;
         x = leftPadding;
@@ -415,6 +419,14 @@ class GameController {
     document.getElementById("stop-game-button").disabled = !enabled;
   }
 
+  setSpinLockedState(locked) {
+    document.getElementById("spin-button").disabled = locked;
+    document.getElementById("guess-letter-button").disabled = locked;
+    document.getElementById("guess-answer-button").disabled = locked;
+    document.getElementById("letter-input").disabled = locked;
+    document.getElementById("answer-input").disabled = locked;
+  }
+
   setStatus(message) {
     document.getElementById("status-message").textContent = message;
   }
@@ -422,18 +434,24 @@ class GameController {
   renderPlayers() {
     const playersList = document.getElementById("players-list");
     playersList.innerHTML = "";
+    // Com muitos jogadores (5+), reduz o tamanho dos cards para caber mais
+    // gente sem depender só da rolagem interna da lista.
+    playersList.classList.toggle("compact", this.players.length > 4);
 
     this.players.forEach((player, index) => {
       const item = document.createElement("div");
       item.className = `player-item ${index === this.currentPlayerIndex ? "active" : ""}`;
       item.innerHTML = `
-        <div class="name">${player.nome}</div>
+        <div class="name"></div>
         <div class="score">${player.total}</div>
         <div class="player-meta">
           <span>Rodada: ${player.rodada}</span>
           <span>Vez: ${index === this.currentPlayerIndex ? "Sim" : "Não"}</span>
         </div>
       `;
+      // Nome do jogador vem de um input do usuário: usar textContent (em vez de
+      // interpolar no innerHTML) evita injeção de HTML/script via nome customizado.
+      item.querySelector(".name").textContent = player.nome;
       playersList.appendChild(item);
     });
   }
@@ -559,9 +577,20 @@ class GameController {
       return;
     }
 
+    // Zera o valor sorteado anterior e trava os controles enquanto a roleta
+    // gira, evitando que um clique duplo/rápido use um valor de rodada antigo
+    // (condição de corrida) antes da nova animação terminar.
+    this.currentSpinValue = null;
+    this.setSpinLockedState(true);
     audioEngine.playSpin();
     this.setStatus(`${this.getCurrentPlayer().nome} girando a roleta...`);
     const value = await this.wheel.spinRandom();
+
+    if (this.finished) {
+      return;
+    }
+
+    this.setSpinLockedState(false);
     this.currentSpinValue = value;
 
     if (typeof value === "number") {
@@ -579,12 +608,11 @@ class GameController {
 
     if (value === "ZERA") {
       const player = this.getCurrentPlayer();
-      const roundPoints = player.rodada;
       player.rodada = 0;
-      player.total = Math.max(0, player.total - roundPoints);
+      player.total = 0;
       audioEngine.playWrong();
       this.renderPlayers();
-      this.setStatus(`${player.nome} caiu em ZERA. Sua pontuação da rodada foi resetada.`);
+      this.setStatus(`${player.nome} caiu em ZERA. Sua pontuação total foi zerada.`);
       this.nextPlayer();
       this.currentSpinValue = null;
       return;
@@ -634,7 +662,8 @@ class GameController {
     }
 
     const player = this.getCurrentPlayer();
-    const gain = this.currentSpinValue * matches;
+    // const gain = this.currentSpinValue * matches;
+    const gain = this.currentSpinValue;
     player.rodada += gain;
     player.total += gain;
 
@@ -680,6 +709,7 @@ class GameController {
     audioEngine.playWrong();
     this.setStatus(`Resposta errada. ${this.getCurrentPlayer().nome} perdeu a vez.`);
     this.nextPlayer();
+    this.currentSpinValue = null;
     input.value = "";
     this.renderPlayers();
   }
